@@ -1,0 +1,6 @@
+[submodule "backend/reminders"]
+	path = backend/reminders
+	url = https://github.com/andreibalau/reminders.git
+[submodule "frontend/reminders-client"]
+	path = frontend/reminders-client
+	url = https://github.com/andreibalau/reminders-client.git

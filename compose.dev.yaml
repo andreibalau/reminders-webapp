@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  reminders:
+    build:
+      context: ./backend/reminders
+      target: development
+    stdin_open: true
+    tty: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+
+  reminders-app:
+    build:
+      context: ./frontend/reminders-client
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    volumes:
+      - /app/node_modules
+      - ./frontend/reminders-client/:/app
+    depends_on:
+      - reminders
+
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_DB=reminders
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  db-data:
